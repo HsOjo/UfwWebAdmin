@@ -1,0 +1,9 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content_inner %}
+    <pre style="white-space: pre-wrap;">{{ e }}</pre>
+    <br/>
+    <button class="btn btn-primary" onclick="history.back()">Back</button>
+{% endblock %}

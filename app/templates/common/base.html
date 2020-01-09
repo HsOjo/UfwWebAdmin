@@ -1,0 +1,21 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/utils.html' as utils %}
+
+{% block styles %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+    {% include 'common/nav.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-bottom: 16px; padding-top: 72px;">
+        {{ utils.flashed_messages() }}
+        {% block content_inner %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
