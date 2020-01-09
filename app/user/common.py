@@ -1,7 +1,7 @@
 from flask_login import current_user
 
 from app import login_manager
-from .models import UserModel
+from app.user.models import UserModel
 
 
 @login_manager.user_loader

@@ -1,11 +1,11 @@
-from flask_sqlalchemy import BaseQuery, Model
+from flask_sqlalchemy import BaseQuery, Model as RawModel
 
 
-class BaseModel(Model):
+class Model(RawModel):
     query: BaseQuery
 
     def __init__(self, **kwargs):
-        super(BaseModel, self).__init__(**kwargs)
+        super(Model, self).__init__(**kwargs)
 
     def __repr__(self):
         fields = []
@@ -14,7 +14,7 @@ class BaseModel(Model):
 
             if k[0] != '_':
 
-                if isinstance(v, BaseModel):
+                if isinstance(v, Model):
                     fields.append('%s=<%s ...>' % (k, v.__class__.__name__))
                 elif isinstance(v, str):
                     fields.append("%s='%s'" % (k, v))

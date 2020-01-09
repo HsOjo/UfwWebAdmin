@@ -3,11 +3,11 @@ from typing import List
 from sqlalchemy.engine import ResultProxy
 
 from app import dh
-from app.base.model import BaseModel
+from app.base import Model
 
 
 class Service:
-    __model__ = BaseModel
+    __model__ = Model
 
     def __init__(self):
         self._query = self.__model__.query
@@ -16,7 +16,7 @@ class Service:
 
     @property
     def all_items(self):
-        return self._query.all()  # type: List[BaseModel]
+        return self._query.all()  # type: List[Model]
 
     def get_item(self, id):
         return self._query.get(id)
@@ -54,7 +54,7 @@ class Service:
         if commit_now:
             self.commit(add=False)
 
-    def _check_item(self, item: BaseModel):
+    def _check_item(self, item: Model):
         if not isinstance(item, self.__model__):
             raise Exception("Item type(%s) isn't Collect(%s)." % (item.__class__.__name__, self.__model__.__name__))
 
