@@ -6,7 +6,7 @@ class MainController(Controller):
     url_prefix = '/'
 
     def register_routes(self):
-        self.register_route('/test', self.test)
+        self.register_route(self.test)
 
     def test(self):
         return 'test'

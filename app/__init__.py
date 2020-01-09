@@ -5,8 +5,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from app.database import DatabaseHelper
-from app.main import MainController
-from app.user import UserController
+from app.errors import register_app_errors
 from config import configs
 
 bootstrap = Bootstrap()
@@ -40,7 +39,12 @@ def create_app(env):
     login_manager.login_message = '请登录后再进行操作'
     login_manager.init_app(app)
 
+    from app.main import MainController
     MainController().register_app(app)
+
+    from app.user import UserController
     UserController().register_app(app)
+
+    register_app_errors(app)
 
     return app

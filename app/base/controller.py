@@ -16,13 +16,16 @@ class Controller:
 
     def register_app(self, app: Flask, **options):
         self.app = app
-        self.register_routes()
         options.setdefault('url_prefix', self.url_prefix)
+        print('  -> Register %a on %a' % (self, options['url_prefix']))
+        self.register_routes()
         app.register_blueprint(self.blueprint, **options)
 
-        print('  -> Register %a on %a' % (self, options['url_prefix']))
+    def register_route(self, view_func, rule=None, methods=None, **kwargs):
+        if rule is None:
+            rule = '/%s' % view_func.__name__
 
-    def register_route(self, rule, view_func, methods=None, **kwargs):
+        print('    -> Register %a on %a' % (view_func, rule))
         self.blueprint.add_url_rule(rule, view_func=view_func, methods=methods, **kwargs)
 
     def register_routes(self):
