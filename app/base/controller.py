@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, abort
 
 
 class Controller:
@@ -26,7 +26,18 @@ class Controller:
             rule = '/%s' % view_func.__name__
 
         print('    -> Register %a on %a' % (view_func, rule))
-        self.blueprint.add_url_rule(rule, view_func=view_func, methods=methods, **kwargs)
+
+        def new_view_func(*args, **kwargs):
+            try:
+                return view_func(*args, **kwargs)
+            except Exception as e:
+                return self.exception_hook(e) or abort(500)
+
+        new_view_func.__name__ = view_func.__name__
+        self.blueprint.add_url_rule(rule, view_func=new_view_func, methods=methods, **kwargs)
+
+    def exception_hook(self, e: Exception):
+        pass
 
     def register_routes(self):
         pass

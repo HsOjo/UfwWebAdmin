@@ -4,6 +4,8 @@ from flask_login import login_required, logout_user, login_user
 from app.base.controller import Controller
 from app.user.forms import LoginForm
 from app.user.services import UserService
+from .models import *
+from .common import *
 
 
 class UserController(Controller):
@@ -12,6 +14,10 @@ class UserController(Controller):
     def register_routes(self):
         self.register_route(self.login, methods=['GET', 'POST'])
         self.register_route(self.logout)
+
+    def exception_hook(self, e: Exception):
+        if self.app.debug:
+            return render_template('common/error.html', e=e), 500
 
     def login(self):
         form = LoginForm()
