@@ -4,8 +4,10 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
+from app.commands import register_manage_commands
 from app.database import DatabaseHelper
 from app.errors import register_app_errors
+from app.util.log import Log
 from config import configs
 
 bootstrap = Bootstrap()
