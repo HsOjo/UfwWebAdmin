@@ -1,4 +1,7 @@
-from flask import Blueprint, Flask, abort
+from flask import Blueprint, Flask, abort, render_template
+
+from app import common
+from app.util.log import Log
 
 
 class Controller:
@@ -22,10 +25,11 @@ class Controller:
 
     def register_app(self, app: Flask, **options):
         self.app = app
+        self.hook_register()
         options.setdefault('url_prefix', self.url_prefix)
 
-        if self.app.env == 'development':
-            print('  -> Register %s on %s' % (self.__class__.__name__, options['url_prefix']))
+        if self.is_development:
+            Log.append('-> Register %s on %s' % (self.__class__.__name__, options['url_prefix']))
 
         self.register_routes()
         app.register_blueprint(self.blueprint, **options)
@@ -35,22 +39,32 @@ class Controller:
         if rule is None:
             rule = '/%s' % func_name
 
-        endpoints_str = (self.name + rule.replace('/', '.')).strip('.')
+        endpoints_str = self.name + rule.replace('/', '.')
         endpoints = endpoints_str.split('.')
 
-        if self.app.env == 'development':
-            print('    -> Register %s on %s' % (endpoints_str, rule))
+        if self.is_development:
+            Log.append('\t-> Register %s on %s' % (endpoints_str, rule))
 
         def new_view_func(*args, **kwargs):
             try:
                 return view_func(*args, **kwargs)
             except Exception as e:
-                return self.exception_hook(e) or abort(500)
+                return self.hook_exception(e) or abort(500)
 
         new_view_func.__name__ = view_func.__name__
-        self.blueprint.add_url_rule(rule, endpoints, view_func=new_view_func, methods=methods, **kwargs)
+        self.blueprint.add_url_rule(rule, endpoints[-1], view_func=new_view_func, methods=methods, **kwargs)
 
-    def exception_hook(self, e: Exception):
+    def hook_exception(self, e: Exception):
+        exc = common.get_exception()
+        Log.append(self.hook_exception, 'Error', exc)
+        if self.is_development:
+            return render_template('common/error.html', e=exc), 500
+
+    @property
+    def is_development(self):
+        return self.app.env == 'development'
+
+    def hook_register(self):
         pass
 
     def register_routes(self):

@@ -4,12 +4,17 @@ import time
 from io import StringIO
 from threading import Lock
 
+from flask.helpers import get_env
+
 from app.res.const import Const
 from app.util import io_helper, object_convert
 
 
 class Log:
-    log_dir = os.path.expanduser('~/Library/Logs/')
+    if get_env() == 'development':
+        log_dir = os.path.expanduser('~/Library/Logs/')
+    else:
+        log_dir = '/var/log'
 
     path_log = '%s/%s.log' % (log_dir, Const.app_name)
     path_err = '%s/%s.err.log' % (log_dir, Const.app_name)
@@ -19,15 +24,41 @@ class Log:
     replaces = {}
     lock_log = Lock()
 
+    stdout: StringIO = None
+    stderr: StringIO = None
+
+    debug = False
+
     @staticmethod
-    def init_app(keep_log=False):
+    def init_app(keep_log=False, debug=False):
+        Log.debug = debug
+
         mode = 'a' if keep_log else 'w+'
         Log.io_log = open(Log.path_log, mode)
         Log.io_err = open(Log.path_err, mode)
 
         # redirect stdout and stderr.
-        sys.stdout = Log.io_log
-        sys.stderr = Log.io_err
+        Log.stdout, Log.stderr = sys.stdout, sys.stderr
+        sys.stdout, sys.stderr = Log.io_log, Log.io_err
+
+        if Log.debug:
+            Log.debug_redirect()
+
+    @staticmethod
+    def debug_redirect():
+        log_w = Log.io_log.write
+        err_w = Log.io_log.write
+
+        def bind_log_w(*args, **kwargs):
+            log_w(*args, **kwargs)
+            Log.stdout.write(*args, **kwargs)
+
+        def bind_err_w(*args, **kwargs):
+            err_w(*args, **kwargs)
+            Log.stderr.write(*args, **kwargs)
+
+        Log.io_log.write = bind_log_w
+        Log.io_err.write = bind_err_w
 
     @staticmethod
     def set_replaces(replaces: dict):
@@ -74,7 +105,10 @@ class Log:
             items_str.append(item_str)
 
         items_str = ' '.join(items_str)
+        if items_str.strip() != '':
+            items_str = '\t%s\n' % items_str
 
         with Log.lock_log:
-            print('[%s] %s %s\n\t' % (tag, time.ctime(), source), items_str)
+            content = '[%s] %s %s\n%s' % (tag, time.ctime(), source, items_str)
+            Log.io_log.write(content)
             Log.io_log.flush()

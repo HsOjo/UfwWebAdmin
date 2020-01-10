@@ -32,6 +32,7 @@ def register_all_callable_object_from_package(app, pkg, is_filter=False):
 
 
 def create_app(env):
+    Log.init_app(True, env == 'development')
     app = Flask(__name__)
 
     config = configs.get(env)

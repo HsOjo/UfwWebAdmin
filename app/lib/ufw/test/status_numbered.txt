@@ -1,0 +1,97 @@
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] Anywhere                   DENY IN     116.246.31.162            
+[ 2] Anywhere                   DENY IN     43.225.208.168            
+[ 3] Anywhere                   DENY IN     124.78.10.184             
+[ 4] Anywhere                   DENY IN     89.38.145.86              
+[ 5] Anywhere                   DENY IN     183.62.55.234             
+[ 6] Anywhere                   DENY IN     106.13.180.245            
+[ 7] Anywhere                   DENY IN     119.250.126.196           
+[ 8] Anywhere                   DENY IN     118.25.195.244            
+[ 9] Anywhere                   DENY IN     116.228.106.206           
+[10] Anywhere                   DENY IN     218.242.233.163           
+[11] Anywhere                   DENY IN     154.92.17.76              
+[12] Anywhere                   DENY IN     111.250.132.85            
+[13] Anywhere                   DENY IN     185.200.118.73            
+[14] Anywhere                   DENY IN     112.2.2.67                
+[15] Anywhere                   DENY IN     219.154.8.249             
+[16] Anywhere                   DENY IN     54.39.21.54               
+[17] Anywhere                   DENY IN     58.246.16.98              
+[18] Anywhere                   DENY IN     140.206.179.122           
+[19] Anywhere                   DENY IN     218.27.140.178            
+[20] Anywhere                   DENY IN     159.203.201.163           
+[21] Anywhere                   DENY IN     223.99.22.46              
+[22] Anywhere                   DENY IN     115.29.203.9              
+[23] Anywhere                   DENY IN     198.108.67.82             
+[24] Anywhere                   DENY IN     115.220.181.49            
+[25] Anywhere                   DENY IN     103.90.220.214            
+[26] Anywhere                   DENY IN     42.56.120.86              
+[27] Anywhere                   DENY IN     222.65.172.140            
+[28] Anywhere                   DENY IN     113.5.25.244              
+[29] Anywhere                   DENY IN     45.161.101.162            
+[30] Anywhere                   DENY IN     120.224.87.27             
+[31] Anywhere                   DENY IN     89.248.168.51             
+[32] Anywhere                   DENY IN     153.3.232.177             
+[33] Anywhere                   DENY IN     111.255.214.163           
+[34] Anywhere                   DENY IN     118.186.228.90            
+[35] Anywhere                   DENY IN     63.143.45.26              
+[36] Anywhere                   DENY IN     120.78.90.30              
+[37] Anywhere                   DENY IN     222.233.53.132            
+[38] Anywhere                   DENY IN     89.248.174.3              
+[39] Anywhere                   DENY IN     84.214.12.30              
+[40] Anywhere                   DENY IN     123.191.151.68            
+[41] Anywhere                   DENY IN     58.65.220.114             
+[42] Anywhere                   DENY IN     89.248.168.176            
+[43] Anywhere                   DENY IN     103.31.92.113             
+[44] Anywhere                   DENY IN     189.239.90.226            
+[45] Anywhere                   DENY IN     216.218.206.93            
+[46] Anywhere                   DENY IN     101.200.183.212           
+[47] Anywhere                   DENY IN     111.62.4.101              
+[48] Anywhere                   DENY IN     104.248.187.179           
+[49] Anywhere                   DENY IN     114.67.80.209             
+[50] Anywhere                   DENY IN     106.75.25.86              
+[51] Anywhere                   DENY IN     124.156.55.21             
+[52] Anywhere                   DENY IN     219.155.84.228            
+[53] Anywhere                   DENY IN     122.179.71.52             
+[54] Anywhere                   DENY IN     157.230.215.106           
+[55] Anywhere                   DENY IN     128.199.233.188           
+[56] Anywhere                   DENY IN     49.235.87.213             
+[57] Anywhere                   DENY IN     125.37.98.187             
+[58] Anywhere                   DENY IN     124.205.226.1             
+[59] Anywhere                   DENY IN     184.105.247.226           
+[60] Anywhere                   DENY IN     116.230.147.114           
+[61] Anywhere                   DENY IN     223.93.147.142            
+[62] Anywhere                   DENY IN     185.92.223.51             
+[63] Anywhere                   DENY IN     81.192.52.89              
+[64] Anywhere                   DENY IN     211.162.174.121           
+[65] Anywhere                   DENY IN     1.71.129.49               
+[66] Anywhere                   DENY IN     47.101.142.41             
+[67] Anywhere                   DENY IN     149.28.78.38              
+[68] Anywhere                   DENY IN     211.48.140.245            
+[69] Anywhere                   DENY IN     103.11.244.233            
+[70] Anywhere                   DENY IN     27.54.42.19               
+[71] Anywhere                   DENY IN     119.53.184.246            
+[72] Anywhere                   DENY IN     124.77.80.251             
+[73] Anywhere                   DENY IN     59.152.39.177             
+[74] Anywhere                   DENY IN     159.203.193.36            
+[75] Anywhere                   DENY IN     124.200.178.14            
+[76] Anywhere                   DENY IN     74.82.47.56               
+[77] Anywhere                   DENY IN     119.1.97.214              
+[78] Anywhere                   DENY IN     112.64.177.118            
+[79] Anywhere                   DENY IN     27.4.101.252              
+[80] Anywhere                   DENY IN     139.201.159.146           
+[81] Anywhere                   DENY IN     120.72.85.69              
+[82] Anywhere                   DENY IN     101.132.193.81            
+[83] Anywhere                   DENY IN     223.192.232.94            
+[84] Anywhere                   DENY IN     117.3.155.32              
+[85] Anywhere                   DENY IN     119.51.230.179            
+[86] Anywhere                   ALLOW IN    183.39.42.74              
+[87] Anywhere                   DENY IN     119.28.20.112             
+[88] Anywhere                   DENY IN     18.182.4.247              
+[89] Anywhere                   DENY IN     101.231.218.189           
+[90] Anywhere                   ALLOW IN    223.192.232.137           
+[91] Anywhere                   ALLOW IN    219.134.192.68            
+[92] Anywhere                   ALLOW IN    112.95.132.111            
+

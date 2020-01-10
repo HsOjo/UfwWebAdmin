@@ -11,11 +11,6 @@ class InfoController(Controller):
     def register_routes(self):
         self.register_route(self.info, '/')
 
-    def exception_hook(self, e: Exception):
-        print(e)
-        if self.app.env == 'development':
-            return render_template('common/error.html', e=e), 500
-
     @login_required
     def info(self):
         return 'test'

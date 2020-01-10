@@ -1,3 +1,4 @@
+from flask import render_template
 from flask_login import login_required
 
 from app.base import Controller
@@ -13,4 +14,4 @@ class IndexController(Controller):
 
     @login_required
     def index(self):
-        return 'test'
+        return render_template('main/index.html')

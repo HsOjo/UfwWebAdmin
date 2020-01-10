@@ -6,18 +6,13 @@ from app.user.forms import LoginForm
 from app.user.services import UserService
 
 
-class BasicController(Controller):
+class IndexController(Controller):
     import_name = __name__
     url_prefix = '/user'
 
     def register_routes(self):
         self.register_route(self.login, methods=['GET', 'POST'])
         self.register_route(self.logout)
-
-    def exception_hook(self, e: Exception):
-        print(e)
-        if self.app.env == 'development':
-            return render_template('common/error.html', e=e), 500
 
     def login(self):
         form = LoginForm()

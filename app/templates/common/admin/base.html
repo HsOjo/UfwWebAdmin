@@ -1,0 +1,23 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/utils.html' as utils %}
+
+{% block navbar %}
+    {% include 'common/nav.html' %}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='admin/dashboard.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="padding-top: 72px;">
+        <div class="row">
+            {% include 'common/admin/left.html' %}
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                {{ utils.flashed_messages() }}
+                {% block content_inner %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

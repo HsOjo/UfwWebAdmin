@@ -1,0 +1,29 @@
+{% extends 'common/admin/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content_inner %}
+
+    <table class="table">
+        {% for k,v in status.items() %}
+            <tr>
+                <th>{{ k }}</th>
+                <td>{{ v or 'N/A' }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <table class="table">
+        <tr>
+            {% for k in rules[0].data.keys() %}
+                <th>{{ k }}</th>
+            {% endfor %}
+        </tr>
+        {% for rule in rules %}
+            <tr>
+                {% for v in rule.data.values() %}
+                    <td>{{ v }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
