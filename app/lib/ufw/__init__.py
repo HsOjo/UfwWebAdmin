@@ -75,7 +75,7 @@ class Ufw(ShellLib):
         [stat, out, err] = self.exec('reset')
         return stat == 0
 
-    def status(self, option=STATUS_OPTION_VERBOSE):
+    def status(self, option=STATUS_OPTION_VERBOSE, parse_rule=True):
         out = self.exec_out('status', option)
 
         status = {}
@@ -97,7 +97,10 @@ class Ufw(ShellLib):
                         data = data.groupdict()
                         status[data['key']] = data['value']
                     else:
-                        reg_cur = reg_rule
+                        if parse_rule:
+                            reg_cur = reg_rule
+                        else:
+                            break
                 elif reg_cur == reg_rule:
                     data = reg_cur.match(line)
                     if data is not None:

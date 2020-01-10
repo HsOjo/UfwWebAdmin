@@ -2,8 +2,7 @@ from typing import List
 
 from sqlalchemy.engine import ResultProxy
 
-from app import dh
-from app.base import Model
+from app.base.model import Model
 
 
 class Service:
@@ -59,6 +58,8 @@ class Service:
             raise Exception("Item type(%s) isn't Collect(%s)." % (item.__class__.__name__, self.__model__.__name__))
 
     def commit(self, add=True, delete=True):
+        from app import dh
+
         if add:
             for item in self._queue_add:
                 dh.session.add(item)

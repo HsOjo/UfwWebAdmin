@@ -3,5 +3,26 @@
 {% block title %}{% endblock %}
 
 {% block content_inner %}
-
+    <table class="table">
+        {% for k,v in status.items() %}
+            <tr>
+                <th>{{ k }}</th>
+                <td>
+                    {{ v or 'N/A' }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% if default %}
+        <table class="table">
+            {% for k,v in default.items() %}
+                <tr>
+                    <th>{{ k }}</th>
+                    <td>
+                        {{ v or 'N/A' }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}

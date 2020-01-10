@@ -1,1 +1,1 @@
-from .ufw import *
+from .ufw import Ufw

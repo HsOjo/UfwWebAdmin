@@ -1,5 +1,5 @@
 from app import db
-from app.base import Model
+from app.base.model import Model
 
 
 class SettingModel(db.Model, Model):

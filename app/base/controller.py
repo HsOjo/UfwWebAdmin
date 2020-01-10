@@ -23,6 +23,8 @@ class Controller:
         self.blueprint = Blueprint(self.name, self.import_name)
         self.endpoints = []
 
+        self.view_funcs = {}
+
     def register_app(self, app: Flask, **options):
         self.app = app
         self.hook_register()
@@ -39,20 +41,23 @@ class Controller:
         if rule is None:
             rule = '/%s' % func_name
 
-        endpoints_str = self.name + rule.replace('/', '.')
-        endpoints = endpoints_str.split('.')
+        endpoints_str = self.name + rule.replace('/', '.').rstrip('.')
 
         if self.is_development:
             Log.append('\t-> Register %s on %s' % (endpoints_str, rule))
 
-        def new_view_func(*args, **kwargs):
-            try:
-                return view_func(*args, **kwargs)
-            except Exception as e:
-                return self.hook_exception(e) or abort(500)
+        controller_view_func = self.view_funcs.get(view_func)
+        if controller_view_func is None:
+            def controller_view_func(*args, **kwargs):
+                try:
+                    return view_func(*args, **kwargs)
+                except Exception as e:
+                    return self.hook_exception(e) or abort(500)
 
-        new_view_func.__name__ = view_func.__name__
-        self.blueprint.add_url_rule(rule, endpoints[-1], view_func=new_view_func, methods=methods, **kwargs)
+            controller_view_func.__name__ = view_func.__name__
+            self.view_funcs[view_func] = controller_view_func
+
+        self.blueprint.add_url_rule(rule, view_func=controller_view_func, methods=methods, **kwargs)
 
     def hook_exception(self, e: Exception):
         exc = common.get_exception()

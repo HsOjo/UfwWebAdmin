@@ -2,23 +2,13 @@ from typing import List
 
 from flask import render_template
 
-from app.base import Controller
-from app.lib import Ufw, Rule
-from app.lib.ufw.test import UfwTest
+from app.lib import Rule
+from app.main.base import UfwController
 
 
-class RuleController(Controller):
+class RuleController(UfwController):
     import_name = __name__
-
-    def __init__(self):
-        super().__init__()
-        self.ufw = None  # type: Ufw
-
-    def hook_register(self):
-        if self.is_development:
-            self.ufw = UfwTest()
-        else:
-            self.ufw = Ufw()
+    url_prefix = '/rule'
 
     def register_routes(self):
         self.register_route(self.index, '/')

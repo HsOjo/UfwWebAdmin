@@ -1,10 +1,10 @@
 from flask import render_template
 from flask_login import login_required
 
-from app.base import Controller
+from app.main.base import UfwController
 
 
-class IndexController(Controller):
+class IndexController(UfwController):
     import_name = __name__
     url_prefix = '/'
 
@@ -14,4 +14,7 @@ class IndexController(Controller):
 
     @login_required
     def index(self):
-        return render_template('main/index.html')
+        status = self.ufw.status(parse_rule=False)
+        default = status.pop('Default', None)
+
+        return render_template('main/index.html', status=status, default=default)
