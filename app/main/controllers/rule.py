@@ -1,9 +1,10 @@
-from typing import List
+import time
 
 from flask import render_template
 
-from app.lib import Rule
 from app.main.base import UfwController
+from app.main.common import ufw_status, ufw_sync_rule
+from app.main.services.rule import RuleService
 
 
 class RuleController(UfwController):
@@ -15,7 +16,11 @@ class RuleController(UfwController):
         self.register_route(self.index)
 
     def index(self):
-        status = self.ufw.status()
-        status = dict((k.lower().replace(' ', '_'), v) for k, v in status.items())
-        rules = status.pop('rules')  # type: List[Rule]
-        return render_template('rule/index.html', rules=rules, status=status)
+        now = time.time()
+        status = ufw_status(self.ufw)
+        if now - status.get('rules_time', 0) > 60:
+            ufw_sync_rule(self.ufw)
+
+        service = RuleService()
+        pagination = service.query.paginate()
+        return render_template('rule/index.html', pagination=pagination)

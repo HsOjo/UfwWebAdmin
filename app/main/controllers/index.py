@@ -1,7 +1,7 @@
 from flask import render_template
-from flask_login import login_required
 
 from app.main.base import UfwController
+from app.main.common import ufw_status
 
 
 class IndexController(UfwController):
@@ -9,12 +9,10 @@ class IndexController(UfwController):
     url_prefix = '/'
 
     def register_routes(self):
-        self.register_route(self.index)
         self.register_route(self.index, '/')
+        self.register_route(self.index)
 
-    @login_required
     def index(self):
-        status = self.ufw.status(parse_rule=False)
-        default = status.pop('Default', None)
-
+        status = ufw_status(self.ufw, 3)
+        default = status.pop('default', None)
         return render_template('main/index.html', status=status, default=default)

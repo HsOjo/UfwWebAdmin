@@ -41,10 +41,8 @@ class Controller:
         if rule is None:
             rule = '/%s' % func_name
 
-        endpoints_str = self.name + rule.replace('/', '.').rstrip('.')
-
         if self.is_development:
-            Log.append('\t-> Register %s on %s' % (endpoints_str, rule))
+            Log.append('\t-> Register %s.%s on %s' % (self.name, func_name, rule))
 
         controller_view_func = self.view_funcs.get(view_func)
         if controller_view_func is None:

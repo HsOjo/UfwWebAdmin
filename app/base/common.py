@@ -21,13 +21,23 @@ def register_controllers_from_pkg(app, pkg):
 
 def load_setting(key: str):
     from app.base.services import SettingService
-    item = SettingService().get_items(key=key).first()
+    service = SettingService()
+
+    item = service.get_items(key=key).first()
     if item is not None:
         return json.loads(item.value)
+
     return None
 
 
 def save_setting(key: str, value):
     from app.base.services import SettingService
+    service = SettingService()
+
     value = json.dumps(value, ensure_ascii=False)
-    SettingService().add_item(key=key, value=value)
+
+    item = service.get_items(key=key).first()
+    if item is None:
+        service.add_item(key=key, value=value)
+    else:
+        service.edit_item(item, key=key, value=value)

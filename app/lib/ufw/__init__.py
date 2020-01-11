@@ -119,7 +119,7 @@ class Ufw(ShellLib):
             if result is not None:
                 [(logging, level)] = result
                 status['Logging'] = logging
-                status['LoggingLevel'] = level
+                status['Logging level'] = level
 
         default = status.get('Default')
         if default is not None:
@@ -127,6 +127,8 @@ class Ufw(ShellLib):
             if items is not None:
                 items = dict([(k, v) for v, k in items])
             status['Default'] = items
+
+        status = dict((k.lower().replace(' ', '_'), v) for k, v in status.items())
 
         return status
 

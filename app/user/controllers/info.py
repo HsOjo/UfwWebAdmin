@@ -1,4 +1,3 @@
-from flask import render_template
 from flask_login import login_required
 
 from app.base import Controller
@@ -9,8 +8,8 @@ class InfoController(Controller):
     url_prefix = '/user'
 
     def register_routes(self):
-        self.register_route(self.info, '/')
+        self.register_route(self.index, '/')
 
     @login_required
-    def info(self):
+    def index(self):
         return 'test'

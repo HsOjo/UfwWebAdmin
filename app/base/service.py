@@ -1,5 +1,3 @@
-from typing import List
-
 from sqlalchemy.engine import ResultProxy
 
 from app.base.model import Model
@@ -14,11 +12,8 @@ class Service:
         self._queue_delete = []
 
     @property
-    def all_items(self):
-        return self._query.all()  # type: List[Model]
-
-    def get_item(self, id):
-        return self._query.get(id)
+    def query(self):
+        return self._query
 
     def get_items(self, **data):
         result = self._query.filter_by(**data)  # type: ResultProxy

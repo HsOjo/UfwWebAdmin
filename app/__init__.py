@@ -30,6 +30,8 @@ def create_app(env):
 
     db.init_app(app)
 
+    from app.base.models import SettingModel
+
     global migrate
     migrate = Migrate(app, db)
     migrate.init_app(app, render_as_batch=True)

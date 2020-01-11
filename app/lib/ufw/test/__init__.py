@@ -40,3 +40,11 @@ class UfwTest(Ufw):
                     out = io.read()
 
         return out
+
+
+if __name__ == '__main__':
+    status = UfwTest().status()
+    rules = status.pop('Rules')
+    print(status)
+    for i in rules:
+        print(i)

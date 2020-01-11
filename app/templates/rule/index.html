@@ -6,15 +6,25 @@
 
     <table class="table">
         <tr>
-            {% for k in rules[0].data.keys() %}
-                <th>{{ k }}</th>
-            {% endfor %}
+            <th>Direction</th>
+            <th>Source Address</th>
+            <th>Source Ethernet</th>
+            <th>Destination Address</th>
+            <th>Destination Ethernet</th>
+            <th>Comment</th>
+            <th>IPv6</th>
+            <th>Action</th>
         </tr>
-        {% for rule in rules %}
+        {% for item in pagination.items %}
             <tr>
-                {% for v in rule.data.values() %}
-                    <td>{{ v }}</td>
-                {% endfor %}
+                <td>{{ item.direction }}</td>
+                <td>{{ item.src }}</td>
+                <td>{{ item.src_eth }}</td>
+                <td>{{ item.dest }}</td>
+                <td>{{ item.dest_eth }}</td>
+                <td>{{ item.comment }}</td>
+                <td>{{ item.is_v6 }}</td>
+                <td>{{ item.action }}</td>
             </tr>
         {% endfor %}
     </table>
