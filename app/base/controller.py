@@ -1,12 +1,14 @@
-from flask import Blueprint, Flask, abort, render_template
+from flask import Blueprint, Flask, abort, render_template, url_for
 
 from app import common
+from app.base.service import Service
 from app.util.log import Log
 
 
 class Controller:
     import_name = __name__  # type: str
     url_prefix = None  # type: str
+    __service__ = None
 
     def __init__(self):
         self.app = None  # type: Flask
@@ -24,6 +26,10 @@ class Controller:
         self.endpoints = []
 
         self.view_funcs = {}
+
+        self.service = None  # type: Service
+        if self.__service__ is not None:
+            self.service = self.__service__()
 
     def register_app(self, app: Flask, **options):
         self.app = app
@@ -48,7 +54,10 @@ class Controller:
         if controller_view_func is None:
             def controller_view_func(*args, **kwargs):
                 try:
-                    return view_func(*args, **kwargs)
+                    result = view_func(*args, **kwargs)
+                    if self.service is not None:
+                        self.service.commit()
+                    return result
                 except Exception as e:
                     return self.hook_exception(e) or abort(500)
 
@@ -72,3 +81,13 @@ class Controller:
 
     def register_routes(self):
         pass
+
+    def url_for(self, endpoint, controller=None, **kwargs):
+        controller: Controller
+        if controller is None:
+            controller = self
+
+        if callable(endpoint):
+            endpoint = endpoint.__name__
+
+        return url_for('%s.%s' % (controller.name, endpoint), **kwargs)

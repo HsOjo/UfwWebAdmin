@@ -50,6 +50,9 @@ def create_app(env):
     register_controllers_from_pkg(app, main)
     register_controllers_from_pkg(app, user)
 
+    from app import filter
+    register_all_callable_object_from_package(app, filter, True)
+
     register_app_errors(app)
 
     return app

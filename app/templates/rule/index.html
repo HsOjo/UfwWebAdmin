@@ -1,31 +1,47 @@
 {% extends 'common/admin/base.html' %}
 
+{% import 'bootstrap/pagination.html' as pagi %}
+
 {% block title %}{% endblock %}
 
 {% block content_inner %}
-
-    <table class="table">
-        <tr>
-            <th>Direction</th>
-            <th>Source Address</th>
-            <th>Source Ethernet</th>
-            <th>Destination Address</th>
-            <th>Destination Ethernet</th>
-            <th>Comment</th>
-            <th>IPv6</th>
-            <th>Action</th>
-        </tr>
-        {% for item in pagination.items %}
-            <tr>
-                <td>{{ item.direction }}</td>
-                <td>{{ item.src }}</td>
-                <td>{{ item.src_eth }}</td>
-                <td>{{ item.dest }}</td>
-                <td>{{ item.dest_eth }}</td>
-                <td>{{ item.comment }}</td>
-                <td>{{ item.is_v6 }}</td>
-                <td>{{ item.action }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Rules
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-bordered table-striped">
+                <tr>
+                    <th>Direction</th>
+                    <th>Source Address</th>
+                    <th>Source Ethernet</th>
+                    <th>Destination Address</th>
+                    <th>Destination Ethernet</th>
+                    <th>Comment</th>
+                    <th>IPv6</th>
+                    <th>Action</th>
+                    <th>Operation</th>
+                </tr>
+                {% for item in pagination.items %}
+                    <tr>
+                        <td>{{ item.direction }}</td>
+                        <td>{{ item.src }}</td>
+                        <td>{{ item.src_eth }}</td>
+                        <td>{{ item.dest }}</td>
+                        <td>{{ item.dest_eth }}</td>
+                        <td>{{ item.comment }}</td>
+                        <td>{{ item.is_v6 }}</td>
+                        <td>{{ item.action }}</td>
+                        <td>
+                            <a class="btn btn-danger btn-xs"
+                               href="{{ url_for('main.rule.delete', id=item.id) }}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {{ pagi.render_pagination(pagination) }}
+        </div>
+    </div>
 {% endblock %}

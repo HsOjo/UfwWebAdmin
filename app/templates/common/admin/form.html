@@ -1,0 +1,9 @@
+{% extends 'common/admin/base.html' %}
+
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content_inner %}
+    {{ wtf.quick_form(form) }}
+{% endblock %}

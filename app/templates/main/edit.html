@@ -1,0 +1,72 @@
+{% extends 'common/admin/form.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Edit Status{% endblock %}
+
+{% block content_inner %}
+    <form method="post">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Status
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th width="20%">Status</th>
+                        <td width="80%">
+                            {{ wtf.form_field(form.status, 'inline') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Logging</th>
+                        <td>
+                            {{ wtf.form_field(form.logging, 'inline') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Logging Level</th>
+                        <td>
+                            {{ wtf.form_field(form.logging_level, 'inline') }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default" id="default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Default Rule
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th width="20%">Incoming</th>
+                        <td width="80%">
+                            {{ wtf.form_field(form.incoming, 'inline') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Outgoing</th>
+                        <td>
+                            {{ wtf.form_field(form.outgoing, 'inline') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Routed</th>
+                        <td>
+                            {{ wtf.form_field(form.routed, 'inline') }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        {{ form.csrf_token }}
+
+        <a class="btn btn-primary" href="{{ url_for('main.index.index') }}">Back</a>
+        {{ wtf.form_field(form.submit) }}
+    </form>
+{% endblock %}

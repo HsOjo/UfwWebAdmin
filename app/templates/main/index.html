@@ -1,28 +1,79 @@
 {% extends 'common/admin/base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Status Info{% endblock %}
 
 {% block content_inner %}
-    <table class="table">
-        {% for k,v in status.items() %}
-            <tr>
-                <th>{{ k }}</th>
-                <td>
-                    {{ v or 'N/A' }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% if default %}
-        <table class="table">
-            {% for k,v in default.items() %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Status
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-bordered">
                 <tr>
-                    <th>{{ k }}</th>
-                    <td>
-                        {{ v or 'N/A' }}
-                    </td>
+                    <th width="20%">Status</th>
+                    <td width="80%">{{ status.status }}</td>
                 </tr>
-            {% endfor %}
-        </table>
+                {% if status.logging %}
+                    <tr>
+                        <th>Logging</th>
+                        <td>{{ status.logging }}</td>
+                    </tr>
+                {% endif %}
+                {% if status.logging_level %}
+                    <tr>
+                        <th>Logging Level</th>
+                        <td>{{ status.logging_level }}</td>
+                    </tr>
+                {% endif %}
+                {% if status.new_profiles %}
+                    <tr>
+                        <th>New Profiles</th>
+                        <td>{{ status.new_profiles }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>Status Sync Time</th>
+                    <td>{{ status.status_time | convert_time }}</td>
+                </tr>
+                <tr>
+                    <th>Rules Sync Time</th>
+                    <td>{{ status.rules_time | convert_time }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% if default %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Default Rule
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                    {% if default.incoming %}
+                        <tr>
+                            <th width="20%">Incoming</th>
+                            <td width="80%">{{ default.incoming }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if default.outgoing %}
+                        <tr>
+                            <th>Outgoing</th>
+                            <td>{{ default.outgoing }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if default.routed %}
+                        <tr>
+                            <th>Routed</th>
+                            <td>{{ default.routed }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
     {% endif %}
+    <a class="btn btn-success" href="{{ url_for('main.index.edit') }}">Edit</a>
 {% endblock %}

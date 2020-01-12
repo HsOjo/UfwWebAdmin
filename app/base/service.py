@@ -7,16 +7,15 @@ class Service:
     __model__ = Model
 
     def __init__(self):
-        self._query = self.__model__.query
         self._queue_add = []
         self._queue_delete = []
 
     @property
     def query(self):
-        return self._query
+        return self.__model__.query
 
     def get_items(self, **data):
-        result = self._query.filter_by(**data)  # type: ResultProxy
+        result = self.query.filter_by(**data)  # type: ResultProxy
         return result
 
     def add_item(self, commit_now=True, **data):
@@ -29,7 +28,7 @@ class Service:
         return item
 
     def edit_item(self, item, commit_now=True, **data):
-        self._check_item(item)
+        item = self._check_item(item)
 
         for k, v in data.items():
             if hasattr(item, k):
@@ -42,15 +41,20 @@ class Service:
         return item
 
     def delete_item(self, item, commit_now=True):
-        self._check_item(item)
+        item = self._check_item(item)
 
         self._queue_delete.append(item)
         if commit_now:
             self.commit(add=False)
 
     def _check_item(self, item: Model):
+        if type(item) in [int, str]:
+            item = self.query.get(item)
+
         if not isinstance(item, self.__model__):
             raise Exception("Item type(%s) isn't Collect(%s)." % (item.__class__.__name__, self.__model__.__name__))
+
+        return item
 
     def commit(self, add=True, delete=True):
         from app import dh
